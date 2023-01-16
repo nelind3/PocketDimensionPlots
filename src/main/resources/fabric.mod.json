@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "pocketdimensionplots",
+  "version": "${version}",
+
+  "name": "PocketDimensionPlots",
+  "description": "PocketDimensionPlots gives all players a personal plot in a void dimension so they can build unhindered by other players.",
+  "authors": [
+    "coolsim"
+  ],
+  "contact": {
+    "homepage": "https://curseforge.com/minecraft/mc-mods/pocketdimensionplots",
+    "sources": "http://github.com/coolsimulations/pocketdimensionplots/",
+    "issues": "http://github.com/coolsimulations/pocketdimensionplots/issues/"
+  },
+
+  "license": "All Rights Reserved",
+  "icon": "logo.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.coolsimulations.PocketDimensionPlots.PocketDimensionPlots"
+    ],
+    "modmenu": [
+      "net.coolsimulations.PocketDimensionPlots.config.PDPConfigGUI"
+    ]
+  },
+  
+  "mixins": [
+    "pocketdimensionplots.mixins.json"
+    ],
+    
+  "depends": {
+    "fabricloader": ">=0.14.12",
+    "fabric": "*",
+    "minecraft": "1.19.x"
+  },
+  
+  "custom": {
+    "modupdater": {
+      "strategy": "curseforge",
+      "projectID": 811157
+    },
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/7DDsHfQ",
+        "modmenu.guilded": "https://guilded.gg/i/Wkn138B2"
+      }
+    }
+  }
+}

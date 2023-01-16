@@ -1,0 +1,96 @@
+{
+  "modmenu.guilded": "Guilded",
+  "pdp.name": "PocketDimensionPlots",
+  
+  "pdp.commands.pdp.teleport_into_player_plot": "Teleporting to %s's plot...",
+  "pdp.commands.pdp.teleport_into_plot": "Teleporting to plot...",
+  "pdp.commands.pdp.teleport_outside_plot": "Teleporting outside...",
+  "pdp.commands.pdp.teleport_outside_plot.owner_left_plot": "Teleporting outside because the owner left the plot...",
+  "pdp.commands.pdp.teleport_outside_plot.owner_left_game": "Teleporting outside because the owner left the game...",
+  "pdp.commands.pdp.teleport_outside_plot.owner_not_online": "Teleporting outside because the owner is not online...",
+  "pdp.commands.pdp.teleport_outside_plot.owner_kicked": "Teleporting outside because the owner kicked you...",
+  
+  "pdp.commands.pdp.create_plot": "Click a Spawn Island Size to Create a Plot: %s %s",
+  "pdp.commands.pdp.create_plot.small": "[Small]",
+  "pdp.commands.pdp.create_plot.large": "[Large]",
+  "pdp.commands.pdp.create_plot.tooltip": "A %sx%sx%s block island made of %s",
+  
+  "pdp.commands.pdp.set_safe": "Plot Spawn Set",
+  "pdp.commands.pdp.set_safe.not_owner": "You can't set the spawn of this plot!",
+  
+  "pdp.commands.pdp.kick": "%s was kicked from the plot",
+  "pdp.commands.pdp.kick.admin": "You can't kick admins!",
+  "pdp.commands.pdp.kick.whitelist": "You can't kick whitelisted players in this plot!",
+  "pdp.commands.pdp.kick.no_plot": "%s is not in a plot you can kick from!",
+  "pdp.commands.pdp.kick.not_whitelisted": "You are not allowed to kick in this plot!",
+  "pdp.commands.pdp.kick.not_in_plot": "You are not in a plot you can kick from!",
+  
+  "pdp.commands.pdp.enter.send": "Teleport request sent",
+  "pdp.commands.pdp.enter.recieve": "%s has just requested to enter your plot! Click here or type /pdp accept %s to accept",
+  
+  "pdp.commands.pdp.accept": "Request accepted",
+  "pdp.commands.pdp.accept.no_request": "%s has not sent you a request!",
+  "pdp.commands.pdp.request_expired": "Request expired",
+  
+  "pdp.commands.pdp.sameTarget.kick": "You can't kick yourself!",
+  "pdp.commands.pdp.sameTarget.whitelist": "You can't whitelist yourself!",
+  "pdp.commands.pdp.sameTarget.enter": "Use /pdp to enter your plot!",
+  "pdp.commands.pdp.sameTarget.accept": "You can't accept your own request!",
+  "pdp.commands.pdp.not_player": "You must be a player to do that!",
+  "pdp.commands.pdp.has_island": "You have alreay created a plot!",
+  "pdp.commands.pdp.no_plot": "You must first create a plot!",
+  "pdp.commands.pdp.other_no_plot": "%s doesn't have a plot!",
+  "pdp.commands.pdp.need_whitelist": "You are not whitelisted on this plot!",
+  "pdp.commands.pdp.not_in_plot": "%s is not in a plot!",
+  "pdp.commands.pdp.gobber_ring": "You can't teleport in the plot world!",
+  
+  "pdp.configgui.title": "PocketDimensionPlots Config",
+  "pdp.configgui.plots": "Plots",
+  "pdp.configgui.server": "Server",
+  "pdp.configgui.teleport_item": "Right-Click Item to Teleport to Plot",
+  "pdp.configgui.tooltip.disable_item": "Set to minecraft:air to disable",
+  "pdp.configgui.teleport_sound": "Sound Played When Teleporting to Plot",
+  "pdp.configgui.teleport_request_timeout": "Teleport Request Timeout",
+  "pdp.configgui.tooltip.teleport_request_timeout": "Seconds Before Request Expires",
+  "pdp.configgui.teleport_enter_message": "Show Teleport Enter Message",
+  "pdp.configgui.teleport_exit_message": "Show Teleport Exit Message",
+  
+  "pdp.configgui.small_island_size_x": "Small Island Size X",
+  "pdp.configgui.small_island_size_y": "Small Island Size Y",
+  "pdp.configgui.small_island_size_z": "Small Island Size Z",
+  "pdp.configgui.small_island_top_block": "Small Island Top Block",
+  "pdp.configgui.small_island_main_block": "Small Island Main Block",
+  
+  "pdp.configgui.large_island_size_x": "Large Island Size X",
+  "pdp.configgui.large_island_size_y": "Large Island Size Y",
+  "pdp.configgui.large_island_size_z": "Large Island Size Z",
+  "pdp.configgui.large_island_top_block": "Large Island Top Block",
+  "pdp.configgui.large_island_main_block": "Large Island Main Block",
+  
+  "pdp.configgui.tooltip.island_size_x": "Size of the Island on the X-Axis",
+  "pdp.configgui.tooltip.island_size_y": "Size of the Island on the Y-Axis",
+  "pdp.configgui.tooltip.island_size_z": "Size of the Island on the Z-Axis",
+  
+  "pdp.configgui.tooltip.island_top_block": "The Top Layer of the Spawn Island",
+  "pdp.configgui.tooltip.island_main_block": "The Main Layers of the Spawn Island",
+  
+  "pdp.configgui.plot_border_radius": "Plot Border Radius",
+  "pdp.configgui.tooltip.plot_border_radius": "Players and Pistons Aren't Allowed Past this Border",
+  "pdp.configgui.plot_center_y_level": "Plot Center Y Level",
+  "pdp.configgui.tooltip.plot_center_y_level": "The Top Layer of the Island will Start Here",
+  "pdp.configgui.plot_spread_distance": "Plot Spread Distance",
+  "pdp.configgui.tooltip.plot_spread_distance": "The Distance Between Plot Centers. Must be at least Double the Border Radius",
+  
+  "pdp.configgui.allow_sleep": "Allow Sleeping in Plots",
+  "pdp.configgui.tooltip.allow_sleep": "Will Link Sleeping with the Overworld",
+  "pdp.configgui.allow_bed_spawn": "Allow Players to Set Plot Spawn with Beds",
+  "pdp.configgui.tooltip.allow_bed_spawn": "Trying to Sleep will Reset the Plot's Spawn Point",
+  
+  "pdp.configgui.server_lang": "Language when not in Singleplayer",
+  "pdp.configgui.tooltip.server_lang": "Codes: https://minecraft.fandom.com/wiki/Language",
+  "pdp.configgui.update_check": "Disable Update Checker Message",
+  
+  "pdp.update.display1": "This is an old version of %s! Version %s is now available!",
+  "pdp.update.display2": "Please click to download!",
+  "pdp.update.display3": "%s no longer supports Minecraft Version %s! Please update to a newer Minecraft Version for more features!"
+}

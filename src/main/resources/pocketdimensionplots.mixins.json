@@ -1,0 +1,17 @@
+{
+    "required": true,
+    "package": "net.coolsimulations.PocketDimensionPlots.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [
+        "EntityMixin", "ServerPlayerMixin",
+        "ServerLevelMixin", "ServerLevelAccessor",
+        "PlayerListMixin",
+        "PistonStructureResolverMixin",
+        
+        "RingTeleportMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "minVersion": "0.8"
+}
