@@ -9,11 +9,14 @@ import net.coolsimulations.PocketDimensionPlots.config.PocketDimensionPlotsDatab
 import net.coolsimulations.PocketDimensionPlots.config.PocketDimensionPlotsDatabase.PlotEntry;
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -65,7 +68,7 @@ public class PocketDimensionPlotsUtils {
 	}
 
 	public static Component getPlayerDisplayName(MinecraftServer server, UUID player) {
-		Component playerName = Component.literal(server.getProfileCache().get(player).get().getName());
+		Component playerName = new TextComponent(server.getProfileCache().get(player).get().getName());
 		if (server.getPlayerList().getPlayer(player) != null)
 			playerName = server.getPlayerList().getPlayer(player).getDisplayName();
 		return playerName;
@@ -102,11 +105,11 @@ public class PocketDimensionPlotsUtils {
 		FabricDimensions.teleport(player, level, new PortalInfo(inCoords, player.getDeltaMovement(), player.getYRot(), player.getXRot()));
 		entityData.putInt("currentPlot", plotToEnter.plotId);
 		if (PocketDimensionPlotsConfig.teleportEnterMessage) {
-			MutableComponent teleport = Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.teleport_into_plot"));
+			MutableComponent teleport = new TranslatableComponent(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.teleport_into_plot"));
 			if (!plotToEnter.playerOwner.equals(player.getUUID()))
-				teleport = Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.teleport_into_player_plot"), new Object[] {getPlayerDisplayName(player.getServer(), plotToEnter.playerOwner)});
+				teleport = new TranslatableComponent(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.teleport_into_player_plot"), new Object[] {getPlayerDisplayName(player.getServer(), plotToEnter.playerOwner)});
 			teleport.withStyle(ChatFormatting.GREEN);
-			player.sendSystemMessage(teleport);
+			player.sendMessage(teleport, Util.NIL_UUID);
 		}
 	}
 
@@ -132,9 +135,9 @@ public class PocketDimensionPlotsUtils {
 		player.resetFallDistance();
 		FabricDimensions.teleport(player, player.getServer().getLevel(outLevel), new PortalInfo(outCoords, player.getDeltaMovement(), player.getYRot(), player.getXRot()));
 		if (PocketDimensionPlotsConfig.teleportExitMessage) {
-			MutableComponent teleport = Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.teleport_outside_plot" + (!reason.isEmpty() ? "." + reason : reason)));
+			MutableComponent teleport = new TranslatableComponent(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.teleport_outside_plot" + (!reason.isEmpty() ? "." + reason : reason)));
 			teleport.withStyle(ChatFormatting.GREEN);
-			player.sendSystemMessage(teleport);
+			player.sendMessage(teleport, Util.NIL_UUID);
 		}
 	}
 

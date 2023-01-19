@@ -5,8 +5,9 @@ import java.util.Scanner;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.SharedConstants;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.MinecraftServer;
 
 public class PocketDimensionPlotsUpdateHandler {
@@ -20,7 +21,7 @@ public class PocketDimensionPlotsUpdateHandler {
 	public static void init(MinecraftServer server) {
 		
 		try {
-            URL url = new URL("https://coolsimulations.net/mcmods/pocketdimensionplots-fabric/versionchecker119.txt");
+            URL url = new URL("https://coolsimulations.net/mcmods/pocketdimensionplots-fabric/versionchecker118.txt");
             Scanner s = new Scanner(url.openStream());
             latestVersion = s.next();
             s.close();
@@ -29,7 +30,7 @@ public class PocketDimensionPlotsUpdateHandler {
         }
 		
 		try {
-			URL url = new URL("https://coolsimulations.net/mcmods/pocketdimensionplots-fabric/updateinfo119.txt");
+			URL url = new URL("https://coolsimulations.net/mcmods/pocketdimensionplots-fabric/updateinfo118.txt");
 			Scanner s = new Scanner(url.openStream());
 			latestVersionInfo = s.nextLine();
 			s.close();
@@ -43,13 +44,13 @@ public class PocketDimensionPlotsUpdateHandler {
 				
 				isOld = true;
 				
-				MutableComponent iwb = Component.literal(PDPReference.MOD_NAME);
+				MutableComponent iwb = new TextComponent(PDPReference.MOD_NAME);
 				iwb.withStyle(ChatFormatting.BLUE);
 				
-				MutableComponent MCVersion = Component.literal(SharedConstants.getCurrentVersion().getName());
+				MutableComponent MCVersion = new TextComponent(SharedConstants.getCurrentVersion().getName());
 				MCVersion.withStyle(ChatFormatting.BLUE);
 				
-				updateInfo = Component.translatable(PDPServerLang.langTranslations(server, "pdp.update.display3"), new Object[] {iwb, MCVersion});
+				updateInfo = new TranslatableComponent(PDPServerLang.langTranslations(server, "pdp.update.display3"), new Object[] {iwb, MCVersion});
 				updateInfo.withStyle(ChatFormatting.YELLOW);
 				
 			}
@@ -58,18 +59,18 @@ public class PocketDimensionPlotsUpdateHandler {
 				
 				isOld = true;
 				
-				MutableComponent iwb = Component.literal(PDPReference.MOD_NAME);
+				MutableComponent iwb = new TextComponent(PDPReference.MOD_NAME);
 				iwb.withStyle(ChatFormatting.BLUE);
 				
-				MutableComponent version = Component.literal(latestVersion);
+				MutableComponent version = new TextComponent(latestVersion);
 				version.withStyle(ChatFormatting.BLUE);
 				
-				updateInfo = Component.translatable(PDPServerLang.langTranslations(server, "pdp.update.display1"), new Object[] {iwb, version});
+				updateInfo = new TranslatableComponent(PDPServerLang.langTranslations(server, "pdp.update.display1"), new Object[] {iwb, version});
 				updateInfo.withStyle(ChatFormatting.YELLOW);
 				
 				if(latestVersionInfo != null) {
 
-					updateVersionInfo = Component.literal(latestVersionInfo);
+					updateVersionInfo = new TextComponent(latestVersionInfo);
 					updateVersionInfo.withStyle(ChatFormatting.DARK_AQUA);
 					updateVersionInfo.withStyle(ChatFormatting.BOLD);
 				}

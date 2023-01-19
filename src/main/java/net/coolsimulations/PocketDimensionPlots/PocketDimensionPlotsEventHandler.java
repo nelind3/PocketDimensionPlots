@@ -17,9 +17,10 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResultHolder;
@@ -50,7 +51,7 @@ public class PocketDimensionPlotsEventHandler {
 				if (!world.isClientSide) {
 					if (stack.getItem() == PocketDimensionPlotsConfig.teleportItem) {
 						if(player.canChangeDimensions()) {
-							player.getServer().getCommands().performPrefixedCommand(player.createCommandSourceStack(), "pdp");
+							player.getServer().getCommands().performCommand(player.createCommandSourceStack(), "pdp");
 							return InteractionResultHolder.success(stack);
 						}
 					}
@@ -112,11 +113,11 @@ public class PocketDimensionPlotsEventHandler {
 					CommandPDP.requests.put(request, time);
 				} else if(time <= 0) {
 					checkRemoval.add(request);
-					MutableComponent expired = Component.translatable(PDPServerLang.langTranslations(server, "pdp.commands.pdp.request_expired"));
+					MutableComponent expired = new TranslatableComponent(PDPServerLang.langTranslations(server, "pdp.commands.pdp.request_expired"));
 					expired.withStyle(ChatFormatting.RED);
 
 					if (server.getPlayerList().getPlayer(request.getSender()) != null)
-						server.getPlayerList().getPlayer(request.getSender()).sendSystemMessage(expired);
+						server.getPlayerList().getPlayer(request.getSender()).sendMessage(expired, Util.NIL_UUID);
 				}
 			}
 
@@ -138,9 +139,9 @@ public class PocketDimensionPlotsEventHandler {
 						if (playerData.getInt("currentPlot") == entry.plotId) {
 							entry.setSafePos(sleepingPos);
 							PocketDimensionPlotsDatabase.save();
-							MutableComponent setSafe = Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.set_safe"));
+							MutableComponent setSafe = new TranslatableComponent(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.set_safe"));
 							setSafe.withStyle(ChatFormatting.GREEN);
-							player.sendSystemMessage(setSafe);
+							player.sendMessage(setSafe, Util.NIL_UUID);
 						}
 					}
 				}

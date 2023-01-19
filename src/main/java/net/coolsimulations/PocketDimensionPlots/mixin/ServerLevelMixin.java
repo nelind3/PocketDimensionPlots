@@ -25,8 +25,8 @@ import net.minecraft.world.level.storage.WritableLevelData;
 public abstract class ServerLevelMixin extends Level {
 
 	protected ServerLevelMixin(WritableLevelData writableLevelData, ResourceKey<Level> resourceKey,
-			Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean bl, boolean bl2, long l, int i) {
-		super(writableLevelData, resourceKey, holder, supplier, bl, bl2, l, i);
+			Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean bl, boolean bl2, long l) {
+		super(writableLevelData, resourceKey, holder, supplier, bl, bl2, l);
 	}
 
 	@ModifyArg(method = "updateSleepingPlayerList()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/SleepStatus;update(Ljava/util/List;)Z"), index = 0)

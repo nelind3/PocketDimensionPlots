@@ -10,8 +10,9 @@ import com.kwpugh.gobber2.items.rings.RingTeleport;
 import net.coolsimulations.PocketDimensionPlots.PDPServerLang;
 import net.coolsimulations.PocketDimensionPlots.PocketDimensionPlots;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
+import net.minecraft.Util;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.portal.PortalInfo;
@@ -23,9 +24,9 @@ public class RingTeleportMixin {
 	public void canEnchant(ServerPlayer player, ServerLevel world, PortalInfo target, CallbackInfo info) {
 		
 		if (world.dimension() == PocketDimensionPlots.VOID || player.getLevel().dimension() == PocketDimensionPlots.VOID) {
-			MutableComponent denied = Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.gobber_ring"));
+			MutableComponent denied = new TranslatableComponent(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.gobber_ring"));
 			denied.withStyle(ChatFormatting.RED);
-			player.sendSystemMessage(denied);
+			player.sendMessage(denied, Util.NIL_UUID);
 			info.cancel();
 		}
 	}

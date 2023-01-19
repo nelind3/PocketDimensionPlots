@@ -13,11 +13,12 @@ import net.coolsimulations.PocketDimensionPlots.PocketDimensionPlotsUpdateHandle
 import net.coolsimulations.PocketDimensionPlots.PocketDimensionPlotsUtils;
 import net.coolsimulations.PocketDimensionPlots.config.PocketDimensionPlotsConfig;
 import net.coolsimulations.PocketDimensionPlots.config.PocketDimensionPlotsDatabase.PlotEntry;
+import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 
@@ -52,9 +53,9 @@ public class PlayerListMixin {
 
 	@Unique
 	private static void messageOutdatedPDP(ServerPlayer player) {
-		player.sendSystemMessage(PocketDimensionPlotsUpdateHandler.updateInfo.withStyle((style) -> {return style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.update.display2")))).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://curseforge.com/minecraft/mc-mods/pocketdimensionplots"));}));
+		player.sendMessage(PocketDimensionPlotsUpdateHandler.updateInfo.withStyle((style) -> {return style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableComponent(PDPServerLang.langTranslations(player.getServer(), "pdp.update.display2")))).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://curseforge.com/minecraft/mc-mods/pocketdimensionplots"));}), Util.NIL_UUID);
 		if(PocketDimensionPlotsUpdateHandler.updateVersionInfo != null)
-			player.sendSystemMessage(PocketDimensionPlotsUpdateHandler.updateVersionInfo.withStyle((style) -> {return style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.update.display2")))).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://curseforge.com/minecraft/mc-mods/pocketdimensionplots"));}));
+			player.sendMessage(PocketDimensionPlotsUpdateHandler.updateVersionInfo.withStyle((style) -> {return style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableComponent(PDPServerLang.langTranslations(player.getServer(), "pdp.update.display2")))).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://curseforge.com/minecraft/mc-mods/pocketdimensionplots"));}), Util.NIL_UUID);
 	}
 
 }
