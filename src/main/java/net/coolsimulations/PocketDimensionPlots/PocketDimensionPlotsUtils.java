@@ -10,7 +10,7 @@ import net.coolsimulations.PocketDimensionPlots.config.PocketDimensionPlotsDatab
 import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -112,7 +112,7 @@ public class PocketDimensionPlotsUtils {
 
 	public static void teleportPlayerOutOfPlot(Player player, String reason) {
 		CompoundTag entityData = ((EntityAccessor) player).getPersistentData();
-		ResourceKey<Level> outLevel = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(entityData.getString("outPlotDim")));
+		ResourceKey<Level> outLevel = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(entityData.getString("outPlotDim")));
 		Vec3 outCoords = new Vec3(entityData.getDouble("outPlotXPos"), entityData.getDouble("outPlotYPos"), entityData.getDouble("outPlotZPos"));
 		teleportPlayerOutOfPlot(player, outLevel, outCoords, reason);
 	}

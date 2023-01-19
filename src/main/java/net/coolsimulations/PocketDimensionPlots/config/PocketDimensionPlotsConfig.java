@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -144,12 +144,12 @@ public class PocketDimensionPlotsConfig {
 	
 	public static JsonObject setJsonObject(JsonObject jsonObject) {
 		
-		ResourceLocation teleport_location = Registry.ITEM.getKey(teleportItem);
-		ResourceLocation teleport_sound_location = Registry.SOUND_EVENT.getKey(teleportSound);
-		ResourceLocation small_top_location = Registry.BLOCK.getKey(smallIslandTopBlock);
-		ResourceLocation small_main_location = Registry.BLOCK.getKey(smallIslandMainBlock);
-		ResourceLocation large_top_location = Registry.BLOCK.getKey(largeIslandTopBlock);
-		ResourceLocation large_main_location = Registry.BLOCK.getKey(largeIslandMainBlock);
+		ResourceLocation teleport_location = BuiltInRegistries.ITEM.getKey(teleportItem);
+		ResourceLocation teleport_sound_location = BuiltInRegistries.SOUND_EVENT.getKey(teleportSound);
+		ResourceLocation small_top_location = BuiltInRegistries.BLOCK.getKey(smallIslandTopBlock);
+		ResourceLocation small_main_location = BuiltInRegistries.BLOCK.getKey(smallIslandMainBlock);
+		ResourceLocation large_top_location = BuiltInRegistries.BLOCK.getKey(largeIslandTopBlock);
+		ResourceLocation large_main_location = BuiltInRegistries.BLOCK.getKey(largeIslandMainBlock);
 		
 		jsonObject.addProperty("teleportItem", teleport_location.getNamespace() + ":" + teleport_location.getPath());
 		jsonObject.addProperty("teleportSound", teleport_sound_location.getNamespace() + ":" + teleport_sound_location.getPath());
@@ -183,48 +183,48 @@ public class PocketDimensionPlotsConfig {
 	}
 	
 	public static void setTeleportItem(String location) {
-		if (Registry.ITEM.get(new ResourceLocation(location)) != null) {
-			teleportItem = Registry.ITEM.get(new ResourceLocation(location));
+		if (BuiltInRegistries.ITEM.get(new ResourceLocation(location)) != null) {
+			teleportItem = BuiltInRegistries.ITEM.get(new ResourceLocation(location));
 		} else {
 			teleportItem = Items.FEATHER;
 		}
 	}
 	
 	public static void setTeleportSound(String location) {
-		if (Registry.SOUND_EVENT.get(new ResourceLocation(location)) != null) {
-			teleportSound = Registry.SOUND_EVENT.get(new ResourceLocation(location));
+		if (BuiltInRegistries.SOUND_EVENT.get(new ResourceLocation(location)) != null) {
+			teleportSound = BuiltInRegistries.SOUND_EVENT.get(new ResourceLocation(location));
 		} else {
 			teleportSound = SoundEvents.ENDERMAN_TELEPORT;
 		}
 	}
 	
 	public static void setSmallTopBlock(String location) {
-		if (Registry.BLOCK.get(new ResourceLocation(location)) != null) {
-			smallIslandTopBlock = Registry.BLOCK.get(new ResourceLocation(location));
+		if (BuiltInRegistries.BLOCK.get(new ResourceLocation(location)) != null) {
+			smallIslandTopBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(location));
 		} else {
 			smallIslandTopBlock = Blocks.GRASS_BLOCK;
 		}
 	}
 	
 	public static void setSmallMainBlock(String location) {
-		if (Registry.BLOCK.get(new ResourceLocation(location)) != null) {
-			smallIslandMainBlock = Registry.BLOCK.get(new ResourceLocation(location));
+		if (BuiltInRegistries.BLOCK.get(new ResourceLocation(location)) != null) {
+			smallIslandMainBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(location));
 		} else {
 			smallIslandMainBlock = Blocks.DIRT;
 		}
 	}
 	
 	public static void setLargeTopBlock(String location) {
-		if (Registry.BLOCK.get(new ResourceLocation(location)) != null) {
-			largeIslandTopBlock = Registry.BLOCK.get(new ResourceLocation(location));
+		if (BuiltInRegistries.BLOCK.get(new ResourceLocation(location)) != null) {
+			largeIslandTopBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(location));
 		} else {
 			largeIslandTopBlock = Blocks.GRASS_BLOCK;
 		}
 	}
 	
 	public static void setLargeMainBlock(String location) {
-		if (Registry.BLOCK.get(new ResourceLocation(location)) != null) {
-			largeIslandMainBlock = Registry.BLOCK.get(new ResourceLocation(location));
+		if (BuiltInRegistries.BLOCK.get(new ResourceLocation(location)) != null) {
+			largeIslandMainBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(location));
 		} else {
 			largeIslandMainBlock = Blocks.DIRT;
 		}
