@@ -1,0 +1,96 @@
+{
+  "pdp.name": "Parcelas de Dimensi\u00f3n de Bolsillo",
+  "modmenu.descriptionTranslation.pocketdimensionplots": "Parcelas de Dimensi\u00f3n de Bolsillo les da a todos los jugadores una trama personal en una dimensi\u00f3n vac\u00eda para que puedan construir sin que otros jugadores los obstaculicen.",
+  
+  "pdp.commands.pdp.teleport_into_player_plot": "Teletransport\u00e1ndose a la parcela de %s...",
+  "pdp.commands.pdp.teleport_into_plot": "Teletransport\u00e1ndose a la parcela...",
+  "pdp.commands.pdp.teleport_outside_plot": "Teletransport\u00e1ndose afuera...",
+  "pdp.commands.pdp.teleport_outside_plot.owner_left_plot": "Teletransport\u00e1ndose afuera porque el due\u00f1o abandon\u00f3 la parcela...",
+  "pdp.commands.pdp.teleport_outside_plot.owner_left_game": "Teletransport\u00e1ndose afuera porque el due\u00f1a abandon\u00f3 la partida...",
+  "pdp.commands.pdp.teleport_outside_plot.owner_not_online": "Teletransport\u00e1ndose afuera porque el due\u00f1a no est\u00e1 en l\u00ednea...",
+  "pdp.commands.pdp.teleport_outside_plot.owner_kicked": "Teletransport\u00e1ndose afuera porque el due\u00f1o te expulsado...",
+  
+  "pdp.commands.pdp.create_plot": "Haga clic en el tama\u00f1o de una isla de inicio para crear una parcela: %s %s",
+  "pdp.commands.pdp.create_plot.small": "[Peque\u00f1o]",
+  "pdp.commands.pdp.create_plot.large": "[Grande]",
+  "pdp.commands.pdp.create_plot.tooltip": "Una isla de bloques de %sx%sx%s hecha de %s",
+  
+  "pdp.commands.pdp.set_safe": "Se ha establecido el punto de generaci\u00f3n de la parcela",
+  "pdp.commands.pdp.set_safe.not_owner": "¡No puedes configurar el punto de generaci\u00f3n de esta parcela!",
+  
+  "pdp.commands.pdp.kick": "Se ha expulsado a %s de la parcela",
+  "pdp.commands.pdp.kick.admin": "¡No puedes expulsar a los administradores!",
+  "pdp.commands.pdp.kick.whitelist": "¡No puedes expulsar a los jugadores incluidos en la lista blanca en este parcela!",
+  "pdp.commands.pdp.kick.no_plot": "¡%s no est\u00e1 en una parcela desde la que puedas expulsar!",
+  "pdp.commands.pdp.kick.not_whitelisted": "¡No tienes permitido expulsar en este parcela!",
+  "pdp.commands.pdp.kick.not_in_plot": "¡No est\u00e1s en una parcela desde la que puedas expulsar!",
+  
+  "pdp.commands.pdp.enter.send": "Solicitado de teletransporte enviada",
+  "pdp.commands.pdp.enter.recieve": "¡%s acaba de solicitado ingresar a su parcela! Haga clic aqu\u00ed o escriba /pdp accept %s para aceptar",
+  
+  "pdp.commands.pdp.accept": "Solicitado aceptada",
+  "pdp.commands.pdp.accept.no_request": "¡%s no te ha enviado una solicitado!",
+  "pdp.commands.pdp.request_expired": "Solicitud caducada",
+  
+  "pdp.commands.pdp.sameTarget.kick": "¡No puedes expulsar a ti mismo!",
+  "pdp.commands.pdp.sameTarget.whitelist": "¡No puedes incluirte en la lista blanca!",
+  "pdp.commands.pdp.sameTarget.enter": "¡Use /pdp para ingresar su parcela!",
+  "pdp.commands.pdp.sameTarget.accept": "¡No puedes aceptar tu propia solicitud!",
+  "pdp.commands.pdp.not_player": "¡Debes ser un jugador para hacer eso!",
+  "pdp.commands.pdp.has_island": "¡Ya has creado una parcela!",
+  "pdp.commands.pdp.no_plot": "¡Primero debes crear una parcela!",
+  "pdp.commands.pdp.other_no_plot": "¡%s no tiene una parcela!",
+  "pdp.commands.pdp.need_whitelist": "¡No est\u00e1 incluido en la lista blanca de este parcela!",
+  "pdp.commands.pdp.not_in_plot": "¡%s no est\u00e1 en una parcela!",
+  "pdp.commands.pdp.gobber_ring": "¡No puedes teletransportarte en el mundo de la parcela!",
+  
+  "pdp.configgui.title": "Parcelas de Dimensi\u00f3n de Bolsillo Configuraci\u00f3n",
+  "pdp.configgui.plots": "Parcelas",
+  "pdp.configgui.server": "Servidor",
+  "pdp.configgui.teleport_item": "Objeto para teletransportarse a la parcela",
+  "pdp.configgui.tooltip.disable_item": "Establecer en minecraft:air para deshabilitar",
+  "pdp.configgui.teleport_sound": "Sonido reproducido al teletransportarse",
+  "pdp.configgui.teleport_request_timeout": "Tiempo de espera de solicitud de teletransporte",
+  "pdp.configgui.tooltip.teleport_request_timeout": "Segundos antes de que caduque la solicitud",
+  "pdp.configgui.teleport_enter_message": "Mostrar teletransporte introducir mensaje",
+  "pdp.configgui.teleport_exit_message": "Mostrar teletransporte salida mensaje",
+  
+  "pdp.configgui.small_island_size_x": "Isla peque\u00f1a tama\u00f1o X",
+  "pdp.configgui.small_island_size_y": "Isla peque\u00f1a tama\u00f1o Y",
+  "pdp.configgui.small_island_size_z": "Isla peque\u00f1a tama\u00f1o Z",
+  "pdp.configgui.small_island_top_block": "Bloque encima de isla peque\u00f1a",
+  "pdp.configgui.small_island_main_block": "Bloque principal de isla peque\u00f1a",
+  
+  "pdp.configgui.large_island_size_x": "Isla grande tama\u00f1o X",
+  "pdp.configgui.large_island_size_y": "Isla grande tama\u00f1o Y",
+  "pdp.configgui.large_island_size_z": "Isla grande tama\u00f1o Z",
+  "pdp.configgui.large_island_top_block": "Bloque encima de isla grande",
+  "pdp.configgui.large_island_main_block": "Bloque principal de isla grande",
+  
+  "pdp.configgui.tooltip.island_size_x": "Tama\u00f1o de la isla en el eje X",
+  "pdp.configgui.tooltip.island_size_y": "Tama\u00f1o de la isla en el eje Y",
+  "pdp.configgui.tooltip.island_size_z": "Tama\u00f1o de la isla en el eje Z",
+  
+  "pdp.configgui.tooltip.island_top_block": "La capa encima de la isla parcela",
+  "pdp.configgui.tooltip.island_main_block": "La capa principal de la isla parcela",
+  
+  "pdp.configgui.plot_border_radius": "Radio del borde de la parcela",
+  "pdp.configgui.tooltip.plot_border_radius": "No se permiten jugadores ni pistones m\u00e1s all\u00e1 de este l\u00edmite",
+  "pdp.configgui.plot_center_y_level": "Centro de parcela Y nivel",
+  "pdp.configgui.tooltip.plot_center_y_level": "La capa encima de la isla comienza aqu\u00ed",
+  "pdp.configgui.plot_spread_distance": "Distancia de dispersi\u00f3n de parcela",
+  "pdp.configgui.tooltip.plot_spread_distance": "La distancia entre los centros de las parcelas. Debe ser al menos el doble del radio del borde",
+  
+  "pdp.configgui.allow_sleep": "Permitir dormir en parcelas",
+  "pdp.configgui.tooltip.allow_sleep": "Vincular el dormir con la superficie",
+  "pdp.configgui.allow_bed_spawn": "Permitir configurar la punto de generaci\u00f3n con camas",
+  "pdp.configgui.tooltip.allow_bed_spawn": "Intentar dormir restablecer\u00e1 el punto de generaci\u00f3n de la parcela",
+  
+  "pdp.configgui.server_lang": "Idioma cuando no est\u00e1 en Un jugador",
+  "pdp.configgui.tooltip.server_lang": "C\u00f3digos: https://minecraft.fandom.com/wiki/Language",
+  "pdp.configgui.update_check": "Desactivar el mensaje del comprobador de actualizaciones",
+  
+  "pdp.update.display1": "¡Esta es una versi\u00f3n antigua de %s! ¡La Versi\u00f3n %s ya est\u00e1 disponible!",
+  "pdp.update.display2": "¡Por favor haga clic para descargar!",
+  "pdp.update.display3": "¡%s ya no es compatible con Minecraft Versi\u00f3n %s! ¡Actualiza a una versi\u00f3n m\u00e1s nueva de Minecraft para obtener m\u00e1s funciones!"
+}

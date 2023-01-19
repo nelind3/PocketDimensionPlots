@@ -37,7 +37,7 @@
   "pdp.commands.pdp.sameTarget.enter": "Use /pdp to enter your plot!",
   "pdp.commands.pdp.sameTarget.accept": "You can't accept your own request!",
   "pdp.commands.pdp.not_player": "You must be a player to do that!",
-  "pdp.commands.pdp.has_island": "You have alreay created a plot!",
+  "pdp.commands.pdp.has_island": "You have already created a plot!",
   "pdp.commands.pdp.no_plot": "You must first create a plot!",
   "pdp.commands.pdp.other_no_plot": "%s doesn't have a plot!",
   "pdp.commands.pdp.need_whitelist": "You are not whitelisted on this plot!",

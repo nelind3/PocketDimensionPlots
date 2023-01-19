@@ -98,6 +98,7 @@ public class PocketDimensionPlotsUtils {
 			entityData.putDouble("outPlotZPos", player.getZ());
 			entityData.putString("outPlotDim", player.getLevel().dimension().location().toString());
 		}
+		player.resetFallDistance();
 		FabricDimensions.teleport(player, level, new PortalInfo(inCoords, player.getDeltaMovement(), player.getYRot(), player.getXRot()));
 		entityData.putInt("currentPlot", plotToEnter.plotId);
 		if (PocketDimensionPlotsConfig.teleportEnterMessage) {
@@ -128,6 +129,7 @@ public class PocketDimensionPlotsUtils {
 			}
 			entityData.putInt("currentPlot", -1);
 		}
+		player.resetFallDistance();
 		FabricDimensions.teleport(player, player.getServer().getLevel(outLevel), new PortalInfo(outCoords, player.getDeltaMovement(), player.getYRot(), player.getXRot()));
 		if (PocketDimensionPlotsConfig.teleportExitMessage) {
 			MutableComponent teleport = Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.teleport_outside_plot" + (!reason.isEmpty() ? "." + reason : reason)));
