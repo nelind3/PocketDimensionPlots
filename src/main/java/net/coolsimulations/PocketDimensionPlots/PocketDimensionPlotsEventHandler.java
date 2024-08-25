@@ -33,7 +33,6 @@ import net.minecraft.world.level.storage.LevelResource;
 public class PocketDimensionPlotsEventHandler {
 
 	public static void registerEvents() {
-
 		onWorldLoad();
 		onWorldTick();
 		onServerTick();
@@ -49,10 +48,11 @@ public class PocketDimensionPlotsEventHandler {
 
 				if (!world.isClientSide) {
 					if (stack.getItem() == PocketDimensionPlotsConfig.teleportItem) {
-						if(player.canChangeDimensions()) {
+						// Patched out as this doesn't seem needed here
+						//if(player.canChangeDimensions()) {
 							player.getServer().getCommands().performPrefixedCommand(player.createCommandSourceStack(), "pdp");
 							return InteractionResultHolder.success(stack);
-						}
+						//}
 					}
 				}
 				return InteractionResultHolder.pass(stack);
@@ -131,7 +131,7 @@ public class PocketDimensionPlotsEventHandler {
 		EntitySleepEvents.ALLOW_SETTING_SPAWN.register((player, sleepingPos) -> {
 
 			CompoundTag playerData = ((EntityAccessor) player).getPersistentData();
-			if (player.getLevel().dimension() == PocketDimensionPlots.VOID) {
+			if (player.getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID) {
 				if (PocketDimensionPlotsConfig.allowBedToSetSpawn) {
 					if (PocketDimensionPlotsUtils.playerHasPlot(player)) {
 						PlotEntry entry = PocketDimensionPlotsUtils.getPlayerPlot(player);
@@ -151,7 +151,7 @@ public class PocketDimensionPlotsEventHandler {
 
 		EntitySleepEvents.ALLOW_SLEEPING.register((player, sleepingPos) -> {
 
-			if (player.getLevel().dimension() == PocketDimensionPlots.VOID) {
+			if (player.getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID) {
 				ServerLevel level = player.getServer().getLevel(Level.OVERWORLD);
 				if (PocketDimensionPlotsConfig.allowSleepingInPlots) {
 					if(level.isDay()) {
@@ -167,15 +167,19 @@ public class PocketDimensionPlotsEventHandler {
 		EntitySleepEvents.ALLOW_RESETTING_TIME.register((player) -> {	
 
 			if (PocketDimensionPlotsConfig.allowSleepingInPlots) {
-				if (player.getLevel() instanceof ServerLevel && player instanceof ServerPlayer && player.getLevel().dimension() == PocketDimensionPlots.VOID) {
+				if (
+					player.getCommandSenderWorld() instanceof ServerLevel &&
+					player instanceof ServerPlayer &&
+					player.getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID
+				) {
 					ServerLevel level = player.getServer().getLevel(Level.OVERWORLD);
-					int i = player.getLevel().getGameRules().getInt(GameRules.RULE_PLAYERS_SLEEPING_PERCENTAGE);
-					if (((ServerLevelAccessor) player.getLevel()).getSleepStatus().areEnoughSleeping(i)) {
+					int i = player.getCommandSenderWorld().getGameRules().getInt(GameRules.RULE_PLAYERS_SLEEPING_PERCENTAGE);
+					if (((ServerLevelAccessor) player.getCommandSenderWorld()).getSleepStatus().areEnoughSleeping(i)) {
 						if (level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
 							long l = level.getDayTime() + 24000L;
 							level.setDayTime(l - l % 24000L);
 						}
-						((ServerLevelAccessor) player.getLevel()).wakeUpAllPlayers();
+						((ServerLevelAccessor) player.getCommandSenderWorld()).wakeUpAllPlayers();
 					}
 				}
 			}

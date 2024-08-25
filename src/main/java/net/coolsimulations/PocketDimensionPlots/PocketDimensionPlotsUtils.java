@@ -7,7 +7,6 @@ import java.util.UUID;
 import net.coolsimulations.PocketDimensionPlots.config.PocketDimensionPlotsConfig;
 import net.coolsimulations.PocketDimensionPlots.config.PocketDimensionPlotsDatabase;
 import net.coolsimulations.PocketDimensionPlots.config.PocketDimensionPlotsDatabase.PlotEntry;
-import net.fabricmc.fabric.api.dimension.v1.FabricDimensions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -19,9 +18,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
 
 public class PocketDimensionPlotsUtils {
@@ -92,14 +91,15 @@ public class PocketDimensionPlotsUtils {
 	public static void teleportPlayerIntoPlot(Player player, PlotEntry plotToEnter, Vec3 inCoords) {
 		ServerLevel level = player.getServer().getLevel(PocketDimensionPlots.VOID);
 		CompoundTag entityData = ((EntityAccessor) player).getPersistentData();
-		if (player.getLevel().dimension() != PocketDimensionPlots.VOID) {
+		if (player.getCommandSenderWorld().dimension() != PocketDimensionPlots.VOID) {
 			entityData.putDouble("outPlotXPos", player.getX());
 			entityData.putDouble("outPlotYPos", player.getY());
 			entityData.putDouble("outPlotZPos", player.getZ());
-			entityData.putString("outPlotDim", player.getLevel().dimension().location().toString());
+			entityData.putString("outPlotDim", player.getCommandSenderWorld().dimension().location().toString());
 		}
 		player.resetFallDistance();
-		FabricDimensions.teleport(player, level, new PortalInfo(inCoords, player.getDeltaMovement(), player.getYRot(), player.getXRot()));
+		player.teleportTo(level, inCoords.x, inCoords.y, inCoords.z, RelativeMovement.ALL, player.getYRot(), player.getXRot());
+		//FabricDimensions.teleport(player, level, new PortalInfo(inCoords, player.getDeltaMovement(), player.getYRot(), player.getXRot()));
 		entityData.putInt("currentPlot", plotToEnter.plotId);
 		if (PocketDimensionPlotsConfig.teleportEnterMessage) {
 			MutableComponent teleport = Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.teleport_into_plot"));
@@ -112,14 +112,14 @@ public class PocketDimensionPlotsUtils {
 
 	public static void teleportPlayerOutOfPlot(Player player, String reason) {
 		CompoundTag entityData = ((EntityAccessor) player).getPersistentData();
-		ResourceKey<Level> outLevel = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(entityData.getString("outPlotDim")));
+		ResourceKey<Level> outLevel = ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryParse(entityData.getString("outPlotDim")));
 		Vec3 outCoords = new Vec3(entityData.getDouble("outPlotXPos"), entityData.getDouble("outPlotYPos"), entityData.getDouble("outPlotZPos"));
 		teleportPlayerOutOfPlot(player, outLevel, outCoords, reason);
 	}
 
 	public static void teleportPlayerOutOfPlot(Player player, ResourceKey<Level> outLevel, Vec3 outCoords, String reason) {
 		CompoundTag entityData = ((EntityAccessor) player).getPersistentData();
-		if (player.getLevel().dimension()  == PocketDimensionPlots.VOID) {
+		if (player.getCommandSenderWorld().dimension()  == PocketDimensionPlots.VOID) {
 			if (playerHasPlot(player)) {
 				if (entityData.getInt("currentPlot") == getPlayerPlot(player).plotId) {
 					entityData.putDouble("inPlotXPos", player.getX());
@@ -130,7 +130,8 @@ public class PocketDimensionPlotsUtils {
 			entityData.putInt("currentPlot", -1);
 		}
 		player.resetFallDistance();
-		FabricDimensions.teleport(player, player.getServer().getLevel(outLevel), new PortalInfo(outCoords, player.getDeltaMovement(), player.getYRot(), player.getXRot()));
+		player.teleportTo(player.getServer().getLevel(outLevel), outCoords.x, outCoords.y, outCoords.z, RelativeMovement.ALL, player.getYRot(), player.getXRot());
+		//FabricDimensions.teleport(player, player.getServer().getLevel(outLevel), new PortalInfo(outCoords, player.getDeltaMovement(), player.getYRot(), player.getXRot()));
 		if (PocketDimensionPlotsConfig.teleportExitMessage) {
 			MutableComponent teleport = Component.translatable(PDPServerLang.langTranslations(player.getServer(), "pdp.commands.pdp.teleport_outside_plot" + (!reason.isEmpty() ? "." + reason : reason)));
 			teleport.withStyle(ChatFormatting.GREEN);
@@ -146,7 +147,7 @@ public class PocketDimensionPlotsUtils {
 				for (ServerPlayer plotPlayer : player.getServer().getPlayerList().getPlayers()) {
 					if (plotPlayer != player) {
 						CompoundTag plotPlayerData = ((EntityAccessor) plotPlayer).getPersistentData();
-						if (plotPlayer.getLevel().dimension() == PocketDimensionPlots.VOID && plotPlayerData.getInt("currentPlot") != -1)
+						if (plotPlayer.getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID && plotPlayerData.getInt("currentPlot") != -1)
 							if (plotPlayerData.getInt("currentPlot") == entry.plotId && !entry.getWhitelist().contains(plotPlayer.getUUID()) && !plotPlayer.hasPermissions(player.getServer().getOperatorUserPermissionLevel())) {
 								teleportPlayerOutOfPlot(plotPlayer, reason);
 							}

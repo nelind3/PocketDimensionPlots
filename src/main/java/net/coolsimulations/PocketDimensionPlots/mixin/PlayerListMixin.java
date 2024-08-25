@@ -1,5 +1,6 @@
 package net.coolsimulations.PocketDimensionPlots.mixin;
 
+import net.minecraft.server.network.CommonListenerCookie;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,8 +26,8 @@ import net.minecraft.server.players.PlayerList;
 public class PlayerListMixin {
 
 	@Inject(at = @At("TAIL"), method = "placeNewPlayer", cancellable = true)
-	public void placeNewPlayer(Connection connection, ServerPlayer player, CallbackInfo info) {
-		if (player.getLevel().dimension() == PocketDimensionPlots.VOID) {
+	public void placeNewPlayer(Connection connection, ServerPlayer player, CommonListenerCookie cookie, CallbackInfo ci) {
+		if (player.getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID) {
 			CompoundTag entityData = ((EntityAccessor) player).getPersistentData();
 			if (entityData.getInt("currentPlot") != -1) {
 				PlotEntry entry = PocketDimensionPlotsUtils.getPlotFromId(entityData.getInt("currentPlot"));

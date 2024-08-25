@@ -21,7 +21,7 @@ public class PocketDimensionPlots implements ModInitializer {
 		return instance;
 	}
 	
-	public static final ResourceKey<Level> VOID = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(PDPReference.MOD_ID, "void"));
+	public static final ResourceKey<Level> VOID = ResourceKey.create(Registries.DIMENSION, ResourceLocation.tryBuild(PDPReference.MOD_ID, "void"));
 
 	@Override
 	public void onInitialize() {

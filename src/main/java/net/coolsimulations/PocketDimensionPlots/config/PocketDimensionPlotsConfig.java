@@ -183,48 +183,48 @@ public class PocketDimensionPlotsConfig {
 	}
 	
 	public static void setTeleportItem(String location) {
-		if (BuiltInRegistries.ITEM.get(new ResourceLocation(location)) != null) {
-			teleportItem = BuiltInRegistries.ITEM.get(new ResourceLocation(location));
+		if (BuiltInRegistries.ITEM.get(ResourceLocation.parse(location)) != null) {
+			teleportItem = BuiltInRegistries.ITEM.get(ResourceLocation.parse(location));
 		} else {
 			teleportItem = Items.FEATHER;
 		}
 	}
 	
 	public static void setTeleportSound(String location) {
-		if (BuiltInRegistries.SOUND_EVENT.get(new ResourceLocation(location)) != null) {
-			teleportSound = BuiltInRegistries.SOUND_EVENT.get(new ResourceLocation(location));
+		if (BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(location)) != null) {
+			teleportSound = BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.parse(location));
 		} else {
 			teleportSound = SoundEvents.ENDERMAN_TELEPORT;
 		}
 	}
 	
 	public static void setSmallTopBlock(String location) {
-		if (BuiltInRegistries.BLOCK.get(new ResourceLocation(location)) != null) {
-			smallIslandTopBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(location));
+		if (BuiltInRegistries.BLOCK.get(ResourceLocation.parse(location)) != null) {
+			smallIslandTopBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(location));
 		} else {
 			smallIslandTopBlock = Blocks.GRASS_BLOCK;
 		}
 	}
 	
 	public static void setSmallMainBlock(String location) {
-		if (BuiltInRegistries.BLOCK.get(new ResourceLocation(location)) != null) {
-			smallIslandMainBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(location));
+		if (BuiltInRegistries.BLOCK.get(ResourceLocation.parse(location)) != null) {
+			smallIslandMainBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(location));
 		} else {
 			smallIslandMainBlock = Blocks.DIRT;
 		}
 	}
 	
 	public static void setLargeTopBlock(String location) {
-		if (BuiltInRegistries.BLOCK.get(new ResourceLocation(location)) != null) {
-			largeIslandTopBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(location));
+		if (BuiltInRegistries.BLOCK.get(ResourceLocation.parse(location)) != null) {
+			largeIslandTopBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(location));
 		} else {
 			largeIslandTopBlock = Blocks.GRASS_BLOCK;
 		}
 	}
 	
 	public static void setLargeMainBlock(String location) {
-		if (BuiltInRegistries.BLOCK.get(new ResourceLocation(location)) != null) {
-			largeIslandMainBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(location));
+		if (BuiltInRegistries.BLOCK.get(ResourceLocation.parse(location)) != null) {
+			largeIslandMainBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(location));
 		} else {
 			largeIslandMainBlock = Blocks.DIRT;
 		}

@@ -29,12 +29,12 @@
   
   "mixins": [
     "pocketdimensionplots.mixins.json"
-    ],
+  ],
     
   "depends": {
     "fabricloader": ">=0.14.12",
     "fabric": "*",
-    "minecraft": "1.19.x"
+    "minecraft": "1.21"
   },
   
   "custom": {

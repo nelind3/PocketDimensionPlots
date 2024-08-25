@@ -30,7 +30,7 @@ public class PocketDimensionPlotsConfigGUI {
 			PocketDimensionPlotsConfig.load(PocketDimensionPlotsConfig.getFile());
 		});
 
-		builder.setDefaultBackgroundTexture(new ResourceLocation("minecraft:textures/block/sculk_catalyst_top.png"));
+		builder.setDefaultBackgroundTexture(ResourceLocation.parse("minecraft:textures/block/sculk_catalyst_top.png"));
 
 		ConfigCategory plots = builder.getOrCreateCategory(Component.translatable(PDPReference.CONFIG_CATEGORY_PLOTS));
 		ConfigCategory server = builder.getOrCreateCategory(Component.translatable(PDPReference.CONFIG_CATEGORY_SERVER));

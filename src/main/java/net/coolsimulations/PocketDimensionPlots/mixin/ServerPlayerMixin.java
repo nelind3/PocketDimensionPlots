@@ -1,5 +1,6 @@
 package net.coolsimulations.PocketDimensionPlots.mixin;
 
+import net.minecraft.world.level.portal.DimensionTransition;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -50,7 +51,7 @@ public abstract class ServerPlayerMixin extends Player {
 	@Inject(at = @At("TAIL"), method = "die", cancellable = true)
 	private  void die(DamageSource source, CallbackInfo info) {
 
-		if (this.getLevel().dimension() == PocketDimensionPlots.VOID) {
+		if (this.getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID) {
 			PlotEntry entry = PocketDimensionPlotsUtils.getPlayerPlot(this);
 			((EntityAccessor) this).getPersistentData().putDouble("inPlotXPos", entry.safePos.getX());
 			((EntityAccessor) this).getPersistentData().putDouble("inPlotYPos", entry.safePos.getY());
@@ -59,15 +60,24 @@ public abstract class ServerPlayerMixin extends Player {
 		}
 	}
 
-	@Inject(method = "changeDimension(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;", at = @At("HEAD"))
-	private void captureLevel(ServerLevel level, CallbackInfoReturnable<Entity> info) {
-		if (this.getLevel() instanceof ServerLevel)
-			localLevel = (ServerLevel) this.getLevel();
+	@Inject(
+		method = "changeDimension(Lnet/minecraft/world/level/portal/DimensionTransition;)Lnet/minecraft/world/entity/Entity;",
+		at = @At("HEAD")
+	)
+	private void captureLevel(DimensionTransition transition, CallbackInfoReturnable<Entity> cir) {
+		if (this.getCommandSenderWorld() instanceof ServerLevel)
+			localLevel = (ServerLevel) this.getCommandSenderWorld();
 	}
 
-	@ModifyArg(method = "changeDimension(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V"))
+	@ModifyArg(
+		method = "changeDimension(Lnet/minecraft/world/level/portal/DimensionTransition;)Lnet/minecraft/world/entity/Entity;",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V"
+		)
+	)
 	private Packet changeDimensionPacket(Packet packet) {
-		if (connection.getPlayer().getLevel().dimension() == PocketDimensionPlots.VOID || localLevel.dimension() == PocketDimensionPlots.VOID) {
+		if (connection.getPlayer().getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID || localLevel.dimension() == PocketDimensionPlots.VOID) {
 			if (packet instanceof ClientboundLevelEventPacket) {
 				ClientboundLevelEventPacket levelPacket = (ClientboundLevelEventPacket) packet;
 				return new ClientboundLevelEventPacket(0, levelPacket.getPos(), levelPacket.getData(), levelPacket.isGlobalEvent());
@@ -76,9 +86,16 @@ public abstract class ServerPlayerMixin extends Player {
 		return packet;
 	}
 
-	@Inject(method = "changeDimension(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/entity/Entity;", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V", shift = At.Shift.AFTER))
-	private void changeDimension(ServerLevel level, CallbackInfoReturnable<Entity> cir) {
-		if (connection.getPlayer().getLevel().dimension() == PocketDimensionPlots.VOID || localLevel.dimension() == PocketDimensionPlots.VOID)
-			connection.getPlayer().getLevel().playSound(null, connection.getPlayer().blockPosition(), PocketDimensionPlotsConfig.teleportSound, SoundSource.PLAYERS, 1.0F, 1.0F);
+	@Inject(
+		method = "changeDimension(Lnet/minecraft/world/level/portal/DimensionTransition;)Lnet/minecraft/world/entity/Entity;",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V",
+			shift = At.Shift.AFTER
+		)
+	)
+	private void changeDimension(DimensionTransition transition, CallbackInfoReturnable<Entity> cir) {
+		if (connection.getPlayer().getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID || localLevel.dimension() == PocketDimensionPlots.VOID)
+			connection.getPlayer().getCommandSenderWorld().playSound(null, connection.getPlayer().blockPosition(), PocketDimensionPlotsConfig.teleportSound, SoundSource.PLAYERS, 1.0F, 1.0F);
 	}
 }
