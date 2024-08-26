@@ -39,68 +39,91 @@ public class CommandPDP {
 	public static HashMap<PlotEnterRequest, Integer> requests = new HashMap<>();
 
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-		dispatcher.register(
-			Commands.literal("pdp")
-				.requires((s) -> s.hasPermission(0))
-				.executes(pdp -> pdpTeleport(pdp.getSource()))
-				.then(Commands.literal("whitelist").then(Commands.literal("add").then(Commands.argument("targets", GameProfileArgument.gameProfile()).suggests((sender, builder) -> {
-					PlayerList playerlist = sender.getSource().getServer().getPlayerList();
-					return SharedSuggestionProvider.suggest(playerlist.getPlayers().stream().filter((player) -> {
-						if(player != sender.getSource().getPlayer() && PocketDimensionPlotsUtils.playerHasPlot(sender.getSource().getPlayer())) {
-							PlotEntry entry = PocketDimensionPlotsUtils.getPlayerPlot(sender.getSource().getPlayer());
-							return !entry.getWhitelist().contains(player.getUUID());
-						}
-						return false;
-					}).map((player) -> {
-						return player.getGameProfile().getName();
-					}), builder);
-				}).executes((pdp) -> {
-					return whitelist(pdp.getSource(), GameProfileArgument.getGameProfiles(pdp, "targets"), true);
-				}))).then(Commands.literal("remove").then(Commands.argument("targets", GameProfileArgument.gameProfile()).suggests((sender, builder) -> {
-					List<String> names = new ArrayList<>();
-					if(PocketDimensionPlotsUtils.playerHasPlot(sender.getSource().getPlayer())) {
-						PlotEntry entry = PocketDimensionPlotsUtils.getPlayerPlot(sender.getSource().getPlayer());
-						for(UUID player : entry.getWhitelist()) {
-							names.add(sender.getSource().getServer().getProfileCache().get(player).get().getName());
-						}
-					}
-					return SharedSuggestionProvider.suggest(names, builder);
-				}).executes((pdp) -> {
-					return whitelist(pdp.getSource(), GameProfileArgument.getGameProfiles(pdp, "targets"), false);
-				}))))
-				.then(Commands.literal("enter").then(Commands.argument("targets", GameProfileArgument.gameProfile()).suggests((sender, builder) -> {
-					List<String> names = new ArrayList<>();
-					for (PlotEntry entry : PocketDimensionPlotsDatabase.plots)
-						if (entry.getWhitelist().contains(sender.getSource().getPlayer().getUUID()) || sender.getSource().hasPermission(sender.getSource().getServer().getOperatorUserPermissionLevel()))
-							names.add(sender.getSource().getServer().getProfileCache().get(entry.playerOwner).get().getName());
-					for (ServerPlayer player : sender.getSource().getServer().getPlayerList().getPlayers())
-						if (!names.contains(player.getGameProfile().getName()) && player != sender.getSource().getPlayer())
-							names.add(player.getGameProfile().getName());
-					return SharedSuggestionProvider.suggest(names, builder);
-				}).executes((pdp) -> {
-					return enter(pdp.getSource(), GameProfileArgument.getGameProfiles(pdp, "targets"));
-				}))).then(Commands.literal("kick").then(Commands.argument("targets", EntityArgument.players()).suggests((sender, builder) -> {
-					PlayerList playerlist = sender.getSource().getServer().getPlayerList();
-					return SharedSuggestionProvider.suggest(playerlist.getPlayers().stream().filter((player) -> {
-						if (player != sender.getSource().getPlayer() && player.getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID) {
-							CompoundTag senderData = ((EntityAccessor) sender.getSource().getPlayer()).getPersistentData();
-							CompoundTag targetData = ((EntityAccessor) player).getPersistentData();
-							if (senderData.getInt("currentPlot") != -1)
-								return senderData.getInt("currentPlot") == targetData.getInt("currentPlot");
-							else if (PocketDimensionPlotsUtils.playerHasPlot(sender.getSource().getPlayer()))
-								return PocketDimensionPlotsUtils.getPlayerPlot(sender.getSource().getPlayer()).plotId == targetData.getInt("currentPlot");
-						}
-						return false;
-					}).map((player) -> {
-						return player.getGameProfile().getName();
-					}), builder);
-				}).executes((pdp) -> {
-					return kick(pdp.getSource(), EntityArgument.getPlayers(pdp, "targets"));
-				}))).then(Commands.literal("accept").then(Commands.argument("targets", EntityArgument.players()).executes((pdp) -> {
-					return accept(pdp.getSource(), EntityArgument.getPlayers(pdp, "targets"));
-				}))).then(Commands.literal("setspawn").executes((pdp -> setSpawn(pdp.getSource())
-						))).then(Commands.literal("create").then(Commands.literal("large").executes((pdp -> createIsland(pdp.getSource(), true)
-								))).then(Commands.literal("small").executes((pdp -> createIsland(pdp.getSource(), false))))));
+		dispatcher.register(Commands.literal("pdp")
+			.requires(s -> s.hasPermission(0))
+			.executes(pdp -> pdpTeleport(pdp.getSource()))
+			.then(Commands.literal("whitelist")
+				.then(Commands.literal("add")
+					.then(Commands.argument("targets", GameProfileArgument.gameProfile())
+						.suggests((sender, builder) -> {
+							PlayerList playerlist = sender.getSource().getServer().getPlayerList();
+							return SharedSuggestionProvider.suggest(playerlist.getPlayers().stream().filter((player) -> {
+								if(player != sender.getSource().getPlayer() && PocketDimensionPlotsUtils.playerHasPlot(sender.getSource().getPlayer())) {
+									PlotEntry entry = PocketDimensionPlotsUtils.getPlayerPlot(sender.getSource().getPlayer());
+									return !entry.getWhitelist().contains(player.getUUID());
+								}
+								return false;
+							}).map((player) -> player.getGameProfile().getName()), builder);
+						})
+						.executes((pdp) -> whitelist(pdp.getSource(), GameProfileArgument.getGameProfiles(pdp, "targets"), true))
+					)
+				)
+				.then(Commands.literal("remove")
+					.then(Commands.argument("targets", GameProfileArgument.gameProfile())
+						.suggests((sender, builder) -> {
+							List<String> names = new ArrayList<>();
+							if(PocketDimensionPlotsUtils.playerHasPlot(sender.getSource().getPlayer())) {
+								PlotEntry entry = PocketDimensionPlotsUtils.getPlayerPlot(sender.getSource().getPlayer());
+								for(UUID player : entry.getWhitelist()) {
+									names.add(sender.getSource().getServer().getProfileCache().get(player).get().getName());
+								}
+							}
+							return SharedSuggestionProvider.suggest(names, builder);
+						})
+						.executes((pdp) -> whitelist(pdp.getSource(), GameProfileArgument.getGameProfiles(pdp, "targets"), false))
+					)
+				)
+			)
+			.then(Commands.literal("enter")
+				.then(Commands.argument("targets", GameProfileArgument.gameProfile())
+					.suggests((sender, builder) -> {
+						List<String> names = new ArrayList<>();
+						for (PlotEntry entry : PocketDimensionPlotsDatabase.plots)
+							if (entry.getWhitelist().contains(sender.getSource().getPlayer().getUUID()) || sender.getSource().hasPermission(sender.getSource().getServer().getOperatorUserPermissionLevel()))
+								names.add(sender.getSource().getServer().getProfileCache().get(entry.playerOwner).get().getName());
+						for (ServerPlayer player : sender.getSource().getServer().getPlayerList().getPlayers())
+							if (!names.contains(player.getGameProfile().getName()) && player != sender.getSource().getPlayer())
+								names.add(player.getGameProfile().getName());
+						return SharedSuggestionProvider.suggest(names, builder);
+					})
+					.executes((pdp) -> enter(pdp.getSource(), GameProfileArgument.getGameProfiles(pdp, "targets")))
+				)
+			)
+			.then(Commands.literal("kick")
+				.then(Commands.argument("targets", EntityArgument.players())
+					.suggests((sender, builder) -> {
+						PlayerList playerlist = sender.getSource().getServer().getPlayerList();
+						return SharedSuggestionProvider.suggest(playerlist.getPlayers().stream().filter((player) -> {
+							if (player != sender.getSource().getPlayer() && player.getCommandSenderWorld().dimension() == PocketDimensionPlots.VOID) {
+								CompoundTag senderData = ((EntityAccessor) sender.getSource().getPlayer()).getPersistentData();
+								CompoundTag targetData = ((EntityAccessor) player).getPersistentData();
+								if (senderData.getInt("currentPlot") != -1)
+									return senderData.getInt("currentPlot") == targetData.getInt("currentPlot");
+								else if (PocketDimensionPlotsUtils.playerHasPlot(sender.getSource().getPlayer()))
+									return PocketDimensionPlotsUtils.getPlayerPlot(sender.getSource().getPlayer()).plotId == targetData.getInt("currentPlot");
+							}
+							return false;
+						}).map((player) -> player.getGameProfile().getName()), builder);
+					})
+					.executes((pdp) -> kick(pdp.getSource(), EntityArgument.getPlayers(pdp, "targets")))
+				)
+			)
+			.then(Commands.literal("accept")
+				.then(Commands.argument("targets", EntityArgument.players())
+					.executes((pdp) -> accept(pdp.getSource(), EntityArgument.getPlayers(pdp, "targets")))
+				)
+			)
+			.then(Commands.literal("setspawn")
+				.executes(pdp -> setSpawn(pdp.getSource()))
+			)
+			.then(Commands.literal("create")
+				.then(Commands.literal("large")
+					.executes(pdp -> createIsland(pdp.getSource(), true)))
+				.then(Commands.literal("small")
+					.executes(pdp -> createIsland(pdp.getSource(), false))
+				)
+			)
+		);
 	}
 
 	private static int whitelist(CommandSourceStack sender, Collection<GameProfile> players, boolean addToWhitelist) {
